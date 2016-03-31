@@ -358,7 +358,6 @@ cat /dev/null > /var/log/apache2/access.log
 cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
 sed -i "s|sudo -i||g" /home/$UNIXUSER/.bash_profile
-sed -i "s|mod_php5|mod_php7|g" $OCPATH/.htaccess
 cat /dev/null > /etc/rc.local
 cat << RCLOCAL > "/etc/rc.local"
 #!/bin/sh -e

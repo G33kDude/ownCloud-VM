@@ -28,6 +28,13 @@ fi
 sleep 2 # Avoid latency in messages
 
 echo
+echo "Generating new SSH keys for the server..."
+echo
+sleep 1
+rm -v /etc/ssh/ssh_host_*
+dpkg-reconfigure openssh-server
+
+echo
 echo "Getting all the latest scripts from GitHub..."
 echo
 

@@ -129,7 +129,7 @@ echo "+--------------------------------------------------------------------+"
 echo "| This script will configure your ownCloud and activate SSL.         |"
 echo "| It will also do the following:                                     |"
 echo "|                                                                    |"
-echo "| - Activate a Virtual Host for your ownCloud install                |"
+echo "| - Generate new SSH keys for the server                             |"
 echo "| - Install phpMyadmin and make it secure                            |"
 echo "| - Install Webmin                                                   |"
 echo "| - Upgrade your system to latest version                            |"
@@ -149,6 +149,13 @@ echo -e "\e[32m"
 read -p "Press any key to start the script..." -n1 -s
 clear
 echo -e "\e[0m"
+
+echo
+echo "Generating new SSH keys for the server..."
+echo
+sleep 1
+rm -v /etc/ssh/ssh_host_*
+dpkg-reconfigure openssh-server
 
 # Install phpMyadmin
 bash $SCRIPTS/phpmyadmin_install.sh
@@ -343,7 +350,6 @@ cat /dev/null > /var/log/apache2/access.log
 cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
 sed -i "s|sudo -i||g" /home/$UNIXUSER/.bash_profile
-sed -i "s|mod_php5|mod_php7|g" $OCPATH/.htaccess
 cat /dev/null > /etc/rc.local
 cat << RCLOCAL > "/etc/rc.local"
 #!/bin/sh -e
