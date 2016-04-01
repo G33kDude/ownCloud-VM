@@ -220,6 +220,8 @@ fi
 if [ -d "$certfiles" ]; then
 # Activate new config
         bash /var/scripts/test-new-config.sh
+	echo "Success!"
+	exit 0
 else
         echo -e "\e[96m"
         echo -e "It seems like no certs were generated, we do three more tries."
@@ -242,6 +244,8 @@ fi
 if [ -d "$certfiles" ]; then
 # Activate new config
 	bash /var/scripts/test-new-config.sh
+	echo "Success!"
+        exit 0
 else
 	echo -e "\e[96m"
 	echo -e "It seems like no certs were generated, we do two more tries."
@@ -264,6 +268,9 @@ fi
 if [ -d "$certfiles" ]; then
 # Activate new config
         bash /var/scripts/test-new-config.sh
+        echo "Success!"
+        exit 0
+
 else
         echo -e "\e[96m"
         echo -e "It seems like no certs were generated, we do one more try."
@@ -286,11 +293,13 @@ fi
 if [ -d "$certfiles" ]; then
 # Activate new config
         bash /var/scripts/test-new-config.sh
+        echo "Success!"
+        exit 0
+
 else
         echo -e "\e[96m"
         echo -e "Sorry, last try failed as well. :/ "
         echo -e "\e[0m"
-fi
 cat << ENDMSG
 +-----------------------------------------------------------------------+
 | The script is located in /var/scripts/activate-ssl.sh                 |
@@ -317,5 +326,5 @@ ENDMSG
 	rm -R /root/.local/share/letsencrypt
 # Change ServerName in apache.conf
 	sed -i "s|ServerName $domain|ServerName owncloud|g" /etc/apache2/apache2.conf
-
+fi
 clear
