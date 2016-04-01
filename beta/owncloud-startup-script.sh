@@ -284,26 +284,6 @@ else
 echo "Not changing password as you already changed <user> and <pass> in the script"
 fi
 
-# Let's Encrypt
-function ask_yes_or_no() {
-    read -p "$1 ([y]es or [N]o): "
-    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
-        y|yes) echo "yes" ;;
-        *)     echo "no" ;;
-    esac
-}
-if [[ "yes" == $(ask_yes_or_no "Do you want to install a real SSL cert (from Let's Encrypt) on this machine?
-The script is still Beta, feel free to contribute!") ]]
-then
-	bash $SCRIPTS/activate-ssl.sh
-else
-echo
-    echo "OK, but if you want to run it later, just type: sudo bash $SCRIPTS/activate-ssl.sh"
-    echo -e "\e[32m"
-    read -p "Press any key to continue... " -n1 -s
-    echo -e "\e[0m"
-fi
-
 # Upgrade system
 clear
 echo System will now upgrade...
@@ -339,7 +319,6 @@ echo
 
 # Cleanup 2
 sudo -u www-data php $OCPATH/occ maintenance:repair
-rm $SCRIPTS/owncloud-startup-script.sh
 rm $SCRIPTS/ip.sh
 rm $SCRIPTS/trusted.sh
 rm $SCRIPTS/test_connection.sh
@@ -350,6 +329,7 @@ rm $SCRIPTS/change-root-profile.sh
 rm $SCRIPTS/change-ocadmin-profile.sh
 rm $SCRIPTS/install-redis-php-7.sh
 rm $OCPATH/data/owncloud.log
+rm $SCRIPTS/owncloud-startup-script.sh
 sed -i "s|instruction.sh|techandme.sh|g" /home/$UNIXUSER/.bash_profile
 cat /dev/null > ~/.bash_history
 cat /dev/null > /var/spool/mail/root
@@ -377,7 +357,26 @@ exit 0
 
 RCLOCAL
 
-## Reboot
+# Let's Encrypt
+function ask_yes_or_no() {
+    read -p "$1 ([y]es or [N]o): "
+    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
+        y|yes) echo "yes" ;;
+        *)     echo "no" ;;
+    esac
+}
+if [[ "yes" == $(ask_yes_or_no "Do you want to install a real SSL cert (from Let's Encrypt) on this machine?") ]]
+then
+        bash $SCRIPTS/activate-ssl.sh
+else
+echo
+    echo "OK, but if you want to run it later, just type: sudo bash $SCRIPTS/activate-ssl.sh"
+    echo -e "\e[32m"
+    read -p "Press any key to continue... " -n1 -s
+    echo -e "\e[0m"
+fi
+
+# Reboot
 reboot
 
 exit 0

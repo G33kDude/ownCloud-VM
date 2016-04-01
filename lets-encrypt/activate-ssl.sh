@@ -3,6 +3,8 @@
 # Tech and Me ©2016 - www.techandme.se
 
 OCPATH=/var/www/owncloud
+IFCONFIG="/sbin/ifconfig"
+ADDRESS=$($IFCONFIG | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 dir_before_letsencrypt=/etc
 letsencryptpath=/etc/letsencrypt
 certfiles=$letsencryptpath/live
@@ -27,15 +29,19 @@ cat << STARTMSG
 |       It's free of charge, and very easy to use.              |
 |                                                               |
 |       Before we begin the installation you need to have       |
-|       a domain that the SSL certs will be vaild for.          |
+|       a domain that the SSL certs will be valid for.          |
 |       If you don't have a domian yet, get one before          |
 |       you run this script!                                    |
+|								|
+|       You also have to open port 443 against this VMs         |
+|       IP address: $ADDRESS - do this in your router.  |
+|       Here is a guide: https://goo.gl/Uyuf65                  |
 |                                                               |
 |       This script is located in /var/scripts and you          |
 |       can run this script after you got a domain.             |
 |                                                               |
 |       Please don't run this script if you don't have		|
-|       a domian yet. You can get one for a fair price here:	|
+|       a domain yet. You can get one for a fair price here:	|
 |       https://www.citysites.eu/                               |
 |                                                               |
 +---------------------------------------------------------------+
@@ -58,6 +64,24 @@ then
     	echo -e "\e[0m"
 exit
 fi
+
+        function ask_yes_or_no() {
+        read -p "$1 ([y]es or [N]o): "
+        case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
+        y|yes) echo "yes" ;;
+        *)     echo "no" ;;
+    esac
+}
+if [[ "no" == $(ask_yes_or_no "Have you forwarded port 443 in your router?") ]]
+then
+        echo
+        echo "OK, but if you want to run this script later, just type: sudo bash /var/scripts/activate-ssl.sh"
+        echo -e "\e[32m"
+        read -p "Press any key to continue... " -n1 -s
+        echo -e "\e[0m"
+exit
+fi
+
     	function ask_yes_or_no() {
     	read -p "$1 ([y]es or [N]o): "
     	case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
@@ -220,7 +244,6 @@ fi
 if [ -d "$certfiles" ]; then
 # Activate new config
         bash /var/scripts/test-new-config.sh
-	echo "Success!"
 	exit 0
 else
         echo -e "\e[96m"
@@ -244,7 +267,6 @@ fi
 if [ -d "$certfiles" ]; then
 # Activate new config
 	bash /var/scripts/test-new-config.sh
-	echo "Success!"
         exit 0
 else
 	echo -e "\e[96m"
@@ -268,7 +290,6 @@ fi
 if [ -d "$certfiles" ]; then
 # Activate new config
         bash /var/scripts/test-new-config.sh
-        echo "Success!"
         exit 0
 
 else
@@ -293,9 +314,8 @@ fi
 if [ -d "$certfiles" ]; then
 # Activate new config
         bash /var/scripts/test-new-config.sh
-        echo "Success!"
-        exit 0
 
+        exit 0
 else
         echo -e "\e[96m"
         echo -e "Sorry, last try failed as well. :/ "

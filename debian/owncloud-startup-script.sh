@@ -172,24 +172,6 @@ echo -e "\e[0m"
         wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh
         chmod 755 $SCRIPTS/activate-ssl.sh
 clear
-# Let's Encrypt
-function ask_yes_or_no() {
-    read -p "$1 ([y]es or [N]o): "
-    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
-        y|yes) echo "yes" ;;
-        *)     echo "no" ;;
-    esac
-}
-if [[ "yes" == $(ask_yes_or_no "Last but not least, do you want to install a real SSL cert (from Let's Encrypt) on this machine?") ]]
-then
-	sudo bash $SCRIPTS/activate-ssl.sh
-else
-echo
-    echo "OK, but if you want to run it later, just type: bash $SCRIPTS/activate-ssl.sh"
-    echo -e "\e[32m"
-    read -p "Press any key to continue... " -n1 -s
-    echo -e "\e[0m"
-fi
 
 # Install Redis
 bash $SCRIPTS/install-redis-php-7.sh
@@ -233,7 +215,6 @@ echo
 
 # Cleanup 2
 su -s /bin/sh -c 'php /var/www/html/owncloud/occ maintenance:repair' www-data
-rm $SCRIPTS/owncloud-startup-script*
 rm $SCRIPTS/ip*
 rm $SCRIPTS/test_connection*
 rm $SCRIPTS/change-ocadmin-profile*
@@ -242,6 +223,7 @@ rm $SCRIPTS/install-redis-php-7*
 rm $SCRIPTS/update-config*
 rm $SCRIPTS/owncloud_install*
 rm $SCRIPTS/trusted*
+rm $SCRIPTS/owncloud-startup-script*
 rm /var/www/html/owncloud/data/owncloud.log*
 cat /dev/null > ~/.bash_history
 cat /dev/null > /var/spool/mail/root
@@ -268,8 +250,24 @@ exit 0
 
 RCLOCAL
 
-## Reboot
-reboot
+# Let's Encrypt
+function ask_yes_or_no() {
+    read -p "$1 ([y]es or [N]o): "
+    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
+        y|yes) echo "yes" ;;
+        *)     echo "no" ;;
+    esac
+}
+if [[ "yes" == $(ask_yes_or_no "Do you want to install a real SSL cert (from Let's Encrypt) on this machine?") ]]
+then
+        bash $SCRIPTS/activate-ssl.sh
+else
+echo
+    echo "OK, but if you want to run it later, just type: bash $SCRIPTS/activate-ssl.sh"
+    echo -e "\e[32m"
+    read -p "Press any key to continue... " -n1 -s
+    echo -e "\e[0m"
+fi
 
 unset SCRIPTS
 unset PW_FILE
@@ -277,5 +275,8 @@ unset CLEARBOOT
 unset IFACE
 unset IFCONFIG
 unset ADDRESS
+
+# Reboot
+reboot
 
 exit 0
