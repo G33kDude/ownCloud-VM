@@ -13,6 +13,8 @@ cat <<-IPCONFIG > "$INTERFACES"
         auto lo $IFACE
 
         iface lo inet loopback
+                pre-up /sbin/ethtool -K $IFACE tso off
+                pre-up /sbin/ethtool -K $IFACE gso off
 
         iface $IFACE inet static
 
