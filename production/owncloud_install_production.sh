@@ -163,7 +163,7 @@ apt-key add - < Release.key && rm Release.key
 sh -c "echo 'deb http://download.owncloud.org/download/repositories/stable/Ubuntu_14.04/ /' >> /etc/apt/sources.list.d/owncloud.list"
 apt-get update && apt-get install owncloud-files -y
 
-mkdir $OCDATA
+mkdir $OCPATH
 
 # Secure permissions
 wget -q $STATIC/setup_secure_permissions_owncloud.sh -P $SCRIPTS
@@ -474,7 +474,7 @@ cat << RCLOCAL > "/etc/rc.local"
 # Download owncloud-startup-script.sh
 		echo "Downloading owncloud-startup-script.sh...."
 		rm $SCRIPTS/owncloud-startup-script.sh
-		wget -q $GITHUB_REPO/owncloud-startup-script.sh -P $SCRIPTS
+		wget -q $STATIC/owncloud-startup-script.sh -P $SCRIPTS
 
 # Check if script exists, otherwise reboot (possible loop)
 	if [ -f $SCRIPTS/owncloud-startup-script.sh ];

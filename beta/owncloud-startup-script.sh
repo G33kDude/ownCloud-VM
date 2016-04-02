@@ -328,7 +328,7 @@ rm $SCRIPTS/owncloud_install.sh
 rm $SCRIPTS/change-root-profile.sh
 rm $SCRIPTS/change-ocadmin-profile.sh
 rm $SCRIPTS/install-redis-php-7.sh
-rm $OCPATH/data/owncloud.log
+rm $OCDATA/owncloud.log
 rm $SCRIPTS/owncloud-startup-script.sh
 sed -i "s|instruction.sh|techandme.sh|g" /home/$UNIXUSER/.bash_profile
 cat /dev/null > ~/.bash_history

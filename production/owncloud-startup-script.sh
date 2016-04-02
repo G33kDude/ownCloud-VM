@@ -321,7 +321,7 @@ rm $SCRIPTS/trusted.sh
 rm $SCRIPTS/test_connection.sh
 rm $SCRIPTS/update-config.php
 rm $SCRIPTS/instruction.sh
-rm $OCPATH/data/owncloud.log
+rm $OCDATA/owncloud.log
 rm $SCRIPTS/owncloud-startup-script.sh
 sed -i "s|instruction.sh|techandme.sh|g" /home/$UNIXUSER/.bash_profile
 cat /dev/null > ~/.bash_history
