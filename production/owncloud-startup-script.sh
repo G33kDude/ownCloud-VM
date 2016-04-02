@@ -132,7 +132,6 @@ echo "| It will also do the following:                                     |"
 echo "|                                                                    |"
 echo "| - Generate new SSH keys for the server                             |"
 echo "| - Install phpMyadmin and make it secure                            |"
-echo "| - Install Webmin                                                   |"
 echo "| - Upgrade your system to latest version                            |"
 echo "| - Set secure permissions to ownCloud                               |"
 echo "| - Set new passwords to Ubuntu Server and ownCloud                  |"
@@ -161,19 +160,6 @@ dpkg-reconfigure openssh-server
 # Install phpMyadmin
 bash $SCRIPTS/phpmyadmin_install.sh
 rm $SCRIPTS/phpmyadmin_install.sh
-
-# Install packages for Webmin
-apt-get install --force-yes -y zip perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
-
-# Install Webmin
-sed -i '$a deb http://download.webmin.com/download/repository sarge contrib' /etc/apt/sources.list
-wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add -
-apt-get update
-apt-get install webmin -y
-echo
-echo "Webmin is installed, access it from your browser: https://$ADDRESS:10000"
-sleep 4
-clear
 
 # Set keyboard layout
 echo "Current keyboard layout is Swedish"
