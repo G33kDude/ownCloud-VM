@@ -228,7 +228,7 @@ if 		[ -f $SCRIPTS/change-root-profile.sh ];
                 echo "change-root-profile.sh exists"
         else
         	wget -q $STATIC/change-root-profile.sh -P $SCRIPTS
-		sed -i "s|owncloud-startup-script.sh|owncloud-install.sh|g" $SCRIPTS/change-root-profile.sh
+		sed -i "s|owncloud-startup-script.sh|owncloud_install.sh|g" $SCRIPTS/change-root-profile.sh
 fi
 if [[ $? > 0 ]]
 then
