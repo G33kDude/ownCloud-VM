@@ -24,7 +24,7 @@ IFACE=$($IP -o link show | awk '{print $2,$9}' | grep "UP" | cut -d ":" -f 1)
 ADDRESS=$($IFCONFIG | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 CLEARBOOT=$(dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e [0-9] | xargs sudo apt-get -y purge)
 GITHUB_REPO=https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/production
-STATIC=https://github.com/enoch85/ownCloud-VM/tree/master/static
+STATIC=https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/static
 UNIXUSER=ocadmin
 UNIXPASS=owncloud
 

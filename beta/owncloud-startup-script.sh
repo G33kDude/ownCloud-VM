@@ -15,6 +15,7 @@ CLEARBOOT=$(dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cu
 WANIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
 PHPMYADMIN_CONF="/etc/apache2/conf-available/phpmyadmin.conf"
 GITHUB_REPO="https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta"
+STATIC="https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/static"
 LETS_ENC="https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt"
 UNIXUSER=ocadmin
 UNIXPASS=owncloud
@@ -33,17 +34,17 @@ echo "Getting scripts from GitHub to be able to run the first setup..."
         if [ -f $SCRIPTS/phpmyadmin_install.sh ];
                 then
                 rm $SCRIPTS/phpmyadmin_install.sh
-                wget -q $GITHUB_REPO/phpmyadmin_install.sh -P $SCRIPTS
+                wget -q $STATIC/phpmyadmin_install.sh -P $SCRIPTS
                 else
-        wget -q $GITHUB_REPO/phpmyadmin_install.sh -P $SCRIPTS
+        wget -q $STATIC/phpmyadmin_install.sh -P $SCRIPTS
 fi
 	# Update Config
         if [ -f $SCRIPTS/update-config.php ];
                 then
                 rm $SCRIPTS/update-config.php
-                wget -q $GITHUB_REPO/update-config.php -P $SCRIPTS
+                wget -q $STATIC/update-config.php -P $SCRIPTS
                 else
-       	wget -q $GITHUB_REPO/update-config.php -P $SCRIPTS
+       	wget -q $STATIC/update-config.php -P $SCRIPTS
 fi
         # Activate SSL
         if [ -f $SCRIPTS/activate-ssl.sh ];
@@ -65,41 +66,41 @@ fi
         if [ -f $SCRIPTS/trusted.sh ];
                 then
                 rm $SCRIPTS/trusted.sh
-                wget -q $GITHUB_REPO/trusted.sh -P $SCRIPTS
+                wget -q $STATIC/trusted.sh -P $SCRIPTS
                 else
-        wget -q $GITHUB_REPO/trusted.sh -P $SCRIPTS
+        wget -q $STATIC/trusted.sh -P $SCRIPTS
 fi
                 # Sets static IP to UNIX
         if [ -f $SCRIPTS/ip.sh ];
                 then
                 rm $SCRIPTS/ip.sh
-                wget -q $GITHUB_REPO/ip.sh -P $SCRIPTS
+                wget -q $STATIC/ip.sh -P $SCRIPTS
                 else
-      	wget -q $GITHUB_REPO/ip.sh -P $SCRIPTS
+      	wget -q $STATIC/ip.sh -P $SCRIPTS
 fi
                 # Tests connection after static IP is set
         if [ -f $SCRIPTS/test_connection.sh ];
                 then
                 rm $SCRIPTS/test_connection.sh
-                wget -q $GITHUB_REPO/test_connection.sh -P $SCRIPTS
+                wget -q $STATIC/test_connection.sh -P $SCRIPTS
                 else
-        wget -q $GITHUB_REPO/test_connection.sh -P $SCRIPTS
+        wget -q $STATIC/test_connection.sh -P $SCRIPTS
 fi
                 # Sets secure permissions after upgrade
         if [ -f $SCRIPTS/setup_secure_permissions_owncloud.sh ];
                 then
                 rm $SCRIPTS/setup_secure_permissions_owncloud.sh
-                wget -q $GITHUB_REPO/setup_secure_permissions_owncloud.sh
+                wget -q $STATIC/setup_secure_permissions_owncloud.sh
                 else
-        wget -q $GITHUB_REPO/setup_secure_permissions_owncloud.sh -P $SCRIPTS
+        wget -q $STATIC/setup_secure_permissions_owncloud.sh -P $SCRIPTS
 fi
                 # Get figlet Tech and Me
         if [ -f $SCRIPTS/techandme.sh ];
                 then
                 rm $SCRIPTS/techandme.sh
-                wget -q $GITHUB_REPO/techandme.sh -P $SCRIPTS
+                wget -q $STATIC/techandme.sh -P $SCRIPTS
                 else
-        wget -q $GITHUB_REPO/techandme.sh -P $SCRIPTS
+        wget -q $STATIC/techandme.sh -P $SCRIPTS
 fi
         # Get the Welcome Screen when http://$address
         if [ -f $SCRIPTS/index.php ];

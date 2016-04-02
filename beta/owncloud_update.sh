@@ -9,7 +9,8 @@ HTML=/var/www/html
 OCPATH=$HTML/owncloud
 DATA=$OCPATH/data
 SECURE="$SCRIPTS/setup_secure_permissions_owncloud.sh"
-OCVERSION=9.0.0
+OCVERSION=9.0.1
+STATIC="https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/static"
 THEME_NAME=""
 
 # Must be root
@@ -21,7 +22,7 @@ then
         echo "Script exists"
 else
         mkdir -p $SCRIPTS
-        wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/setup_secure_permissions_owncloud.sh -P $SCRIPTS
+        wget $STATIC/setup_secure_permissions_owncloud.sh -P $SCRIPTS
 fi
 
 # System Upgrade
