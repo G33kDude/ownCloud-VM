@@ -405,15 +405,6 @@ fi
         wget -q $STATIC/history.sh -P $SCRIPTS
 fi
 
-# Get startup-script
-        if [ -f $SCRIPTS/owncloud-startup-script.sh ];
-                then
-                rm $SCRIPTS/owncloud-startup-script.sh
-                wget -q $STATIC/owncloud-startup-script.sh -P $SCRIPTS
-                else
-        wget -q $STATIC/owncloud-startup-script.sh -P $SCRIPTS
-fi
-
 # Change root profile
         	bash $SCRIPTS/change-root-profile.sh
 if [[ $? > 0 ]]
