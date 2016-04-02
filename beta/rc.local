@@ -14,6 +14,7 @@
 SCRIPTS="/var/scripts"
 HTML="/var/www/html"
 GITHUB_REPO="https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta"
+STATIC="https://github.com/enoch85/ownCloud-VM/tree/master/static"
 LETS_ENC="https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt"
 UNIXUSER=ocadmin
 
@@ -43,7 +44,7 @@ echo
                 then
                 echo "phpmyadmin_install.sh exists"
                 else
-                wget -q $GITHUB_REPO/phpmyadmin_install.sh -P $SCRIPTS
+                wget -q $STATIC/phpmyadmin_install.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -59,7 +60,7 @@ fi
                 then
                 echo "update-config.php exists"
                 else
-        	wget -q $GITHUB_REPO/update-config.php -P $SCRIPTS
+        	wget -q $STATIC/update-config.php -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -91,7 +92,7 @@ if 		[ -f $SCRIPTS/trusted.sh ];
         then
                 echo "trusted.sh exists"
         else
-        	wget -q $GITHUB_REPO/trusted.sh -P $SCRIPTS
+        	wget -q $STATIC/trusted.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -107,7 +108,7 @@ if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
         then
                 echo "install-redis-php-7.sh exists"
         else
-        	wget -q $GITHUB_REPO/install-redis-php-7.sh -P $SCRIPTS
+        	wget -q $STATIC/install-redis-php-7.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -155,7 +156,7 @@ if 		[ -f $SCRIPTS/ip.sh ];
         then
                 echo "ip.sh exists"
         else
-      		wget -q $GITHUB_REPO/ip.sh -P $SCRIPTS
+      		wget -q $STATIC/ip.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -171,7 +172,7 @@ if 		[ -f $SCRIPTS/test_connection.sh ];
         then
                 echo "test_connection.sh exists"
         else
-        	wget -q $GITHUB_REPO/test_connection.sh -P $SCRIPTS
+        	wget -q $STATIC/test_connection.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -187,14 +188,14 @@ if 		[ -f $SCRIPTS/instruction.sh ];
         then
                 echo "instruction.sh exists"
         else
-        	wget -q $GITHUB_REPO/instruction.sh -P $SCRIPTS
+        	wget -q $STATIC/instruction.sh -P $SCRIPTS
 fi
 # Tech and Me figlet
 if              [ -f $SCRIPTS/techandme.sh ];
         then
                 echo "techandme.sh exists"
         else
-                wget -q $GITHUB_REPO/techandme.sh -P $SCRIPTS
+                wget -q $STATIC/techandme.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -210,7 +211,7 @@ if 		[ -f $SCRIPTS/history.sh ];
         then
                 echo "history.sh exists"
         else
-        	wget -q $GITHUB_REPO/history.sh -P $SCRIPTS
+        	wget -q $STATIC/history.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -226,7 +227,7 @@ if 		[ -f $SCRIPTS/change-root-profile.sh ];
         then
                 echo "change-root-profile.sh exists"
         else
-        	wget -q $GITHUB_REPO/change-root-profile.sh -P $SCRIPTS
+        	wget -q $STATIC/change-root-profile.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -242,7 +243,7 @@ if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
         then
         	echo "change-ocadmin-profile.sh  exists"
         else
-        	wget -q $GITHUB_REPO/change-ocadmin-profile.sh -P $SCRIPTS
+        	wget -q $STATIC/change-ocadmin-profile.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
