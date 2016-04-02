@@ -462,6 +462,12 @@ aptitude full-upgrade -y
 
 # Cleanup
 echo "$CLEARBOOT"
+apt-get autoremove -y
+apt-get autoclean
+if [ -f /home/$UNIXUSER/owncloud_install_production.sh ];
+then
+	rm /home/$UNIXUSER/owncloud_install_production.sh
+fi
 
 # Reboot
 reboot
