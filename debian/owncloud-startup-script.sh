@@ -255,10 +255,10 @@ echo
 echo
 cat << LETSENC
 +-----------------------------------------------+
-|       Ok, now the last part - SSL.            |
+|  Ok, now the last part - a proper SSL cert.   |
 |                                               |
-|       The following script will install SSL   |
-|       through Let's encrypt.                  |
+|  The following script will install a trusted 	|
+|  SSL certificate through Let's encrypt.       |
 +-----------------------------------------------+
 LETSENC
 
