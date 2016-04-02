@@ -302,7 +302,7 @@ clear
 # Success!
 echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
-echo    "| You have sucessfully installed ownCloud! System will now reboot... |"
+echo    "|      Congratulations! You have sucessfully installed ownCloud!     |"
 echo    "|                                                                    |"
 echo -e "|         \e[0mLogin to ownCloud in your browser:\e[36m" $ADDRESS"\e[32m           |"
 echo    "|                                                                    |"
@@ -361,11 +361,12 @@ clear
 echo
 echo
 cat << LETSENC
-+------------------------------------------+
-|       Ok, now the last part - SSL.       |
-|       The following script will install  |
-|	SSL through Let's encrypt.         |
-+------------------------------------------+
++-----------------------------------------------+
+|       Ok, now the last part - SSL.       	|
+|						|
+|	The following script will install SSL 	|
+|	through Let's encrypt.	         	|
++-----------------------------------------------+
 LETSENC
 
 
@@ -377,7 +378,7 @@ function ask_yes_or_no() {
         *)     echo "no" ;;
     esac
 }
-if [[ "yes" == $(ask_yes_or_no "Do you want to install a real SSL cert (from Let's Encrypt) on this machine?") ]]
+if [[ "yes" == $(ask_yes_or_no "Do you want to install SSL?") ]]
 then
         bash $SCRIPTS/activate-ssl.sh
 else
