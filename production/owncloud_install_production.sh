@@ -405,6 +405,15 @@ fi
         wget -q $STATIC/history.sh -P $SCRIPTS
 fi
 
+# Get startup-script
+        if [ -f $SCRIPTS/owncloud-startup-script.sh ];
+                then
+                rm $SCRIPTS/owncloud-startup-script.sh
+                wget -q $STATIC/owncloud-startup-script.sh -P $SCRIPTS
+                else
+        wget -q $STATIC/owncloud-startup-script.sh -P $SCRIPTS
+fi
+
 # Change root profile
         	bash $SCRIPTS/change-root-profile.sh
 if [[ $? > 0 ]]
@@ -428,14 +437,6 @@ else
 	sleep 2
 fi
 
-# Make $SCRIPTS excutable
-chmod +x -R $SCRIPTS
-chown root:root -R $SCRIPTS
-
-# Allow $UNIXUSER to run theese scripts
-chown $UNIXUSER:$UNIXUSER $SCRIPTS/instruction.sh
-chown $UNIXUSER:$UNIXUSER $SCRIPTS/history.sh
-
 # Get script for Redis
         if [ -f $SCRIPTS/install-redis-php-7.sh ];
                 then
@@ -444,52 +445,6 @@ chown $UNIXUSER:$UNIXUSER $SCRIPTS/history.sh
         wget -q $STATIC/install-redis-php-7.sh -P $SCRIPTS
 fi
 
-# Install Redis
-bash $SCRIPTS/install-redis-php-7.sh
-rm $SCRIPTS/install-redis-php-7.sh
-
-# Upgrade
-aptitude full-upgrade -y
-
-#Cleanup
-echo "$CLEARBOOT"
-
-# Get the latest owncloud-startup-script.sh
-echo "Writes to rc.local..."
-
-cat << RCLOCAL > "/etc/rc.local"
-#!/bin/sh -e
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
-
-# Download owncloud-startup-script.sh
-		echo "Downloading owncloud-startup-script.sh...."
-		rm $SCRIPTS/owncloud-startup-script.sh
-		wget -q $STATIC/owncloud-startup-script.sh -P $SCRIPTS
-
-# Check if script exists, otherwise reboot (possible loop)
-	if [ -f $SCRIPTS/owncloud-startup-script.sh ];
-        then
-                echo "Download successful!" 
-                sleep 3
-        else
-		echo "Download failed, rebooting in 15 seconds until success. Please check you network connection"
-		sleep 15
-		reboot
-	fi
-
-# Restore colors
-echo -e "\e[0"
-
 # Make $SCRIPTS excutable
 chmod +x -R $SCRIPTS
 chown root:root -R $SCRIPTS
@@ -498,9 +453,15 @@ chown root:root -R $SCRIPTS
 chown $UNIXUSER:$UNIXUSER $SCRIPTS/instruction.sh
 chown $UNIXUSER:$UNIXUSER $SCRIPTS/history.sh
 
-exit 0
+# Install Redis
+bash $SCRIPTS/install-redis-php-7.sh
+rm $SCRIPTS/install-redis-php-7.sh
 
-RCLOCAL
+# Upgrade
+aptitude full-upgrade -y
+
+# Cleanup
+echo "$CLEARBOOT"
 
 # Reboot
 reboot
