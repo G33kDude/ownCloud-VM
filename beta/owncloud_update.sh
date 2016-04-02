@@ -6,7 +6,7 @@
 #
 SCRIPTS=/var/scripts
 HTML=/var/www/html
-OCPATH=$HTML/owncloud
+OCPATH=/var/www/owncloud
 DATA=$OCPATH/data
 SECURE="$SCRIPTS/setup_secure_permissions_owncloud.sh"
 OCVERSION=9.0.1
