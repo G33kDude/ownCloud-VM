@@ -163,7 +163,7 @@ apt-key add - < Release.key && rm Release.key
 sh -c "echo 'deb http://download.owncloud.org/download/repositories/stable/Ubuntu_14.04/ /' >> /etc/apt/sources.list.d/owncloud.list"
 apt-get update && apt-get install owncloud-files -y
 
-mkdir $OCPATH
+mkdir -p $OCDATA
 
 # Secure permissions
 wget -q $STATIC/setup_secure_permissions_owncloud.sh -P $SCRIPTS
