@@ -1,10 +1,6 @@
 #!/bin/bash
 #
 clear
-# save for later:
-#export FILENAME=/var/M-R_passwords.txt
-#export PASSWORD=$(grep -v 'MYSQL' $FILENAME;)
-
 cat << INST1
 +-----------------------------------------------------------------------+
 | Thank you for downloading this ownCloud VM made by Tech and Me!       |
@@ -19,8 +15,8 @@ cat << INST2
 |                                                                       |
 | You can schedule the ownCloud update process using a cron job.        |
 | This is done using a script built into this VM that automatically     |
-| updates ownCloud, sets secure permissions, and logs the               |
-| successful update to /var/log/cronjobs_success.log                    |
+| updates ownCloud, sets secure permissions, and logs the successful    |
+| update to /var/log/cronjobs_success.log                    		|
 | Detailed instructions for setting this up can be found here:          |
 | https://www.techandme.se/set-automatic-owncloud-updates/              |
 |                                                                       |

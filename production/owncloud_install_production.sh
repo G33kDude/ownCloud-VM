@@ -24,6 +24,7 @@ IFACE=$($IP -o link show | awk '{print $2,$9}' | grep "UP" | cut -d ":" -f 1)
 ADDRESS=$($IFCONFIG | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 CLEARBOOT=$(dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e [0-9] | xargs sudo apt-get -y purge)
 GITHUB_REPO=https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/production
+STATIC=https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/static
 UNIXUSER=ocadmin
 UNIXPASS=owncloud
 
@@ -162,10 +163,10 @@ apt-key add - < Release.key && rm Release.key
 sh -c "echo 'deb http://download.owncloud.org/download/repositories/stable/Ubuntu_14.04/ /' >> /etc/apt/sources.list.d/owncloud.list"
 apt-get update && apt-get install owncloud-files -y
 
-mkdir $OCDATA
+mkdir -p $OCDATA
 
 # Secure permissions
-wget -q $GITHUB_REPO/setup_secure_permissions_owncloud.sh -P $SCRIPTS
+wget -q $STATIC/setup_secure_permissions_owncloud.sh -P $SCRIPTS
 bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 
 # Install ownCloud
@@ -372,14 +373,14 @@ bash $SCRIPTS/setup_secure_permissions_owncloud.sh
                 then
                 echo "change-root-profile.sh exists"
                 else
-        wget -q $GITHUB_REPO/change-root-profile.sh -P $SCRIPTS
+        wget -q $STATIC/change-root-profile.sh -P $SCRIPTS
 fi
 # Change $UNIXUSER .bash_profile
         if [ -f $SCRIPTS/change-ocadmin-profile.sh ];
                 then
                 echo "change-ocadmin-profile.sh  exists"
                 else
-        wget -q $GITHUB_REPO/change-ocadmin-profile.sh -P $SCRIPTS
+        wget -q $STATIC/change-ocadmin-profile.sh -P $SCRIPTS
 fi
 # Get startup-script for root
         if [ -f $SCRIPTS/owncloud-startup-script.sh ];
@@ -394,14 +395,14 @@ fi
                 then
                 echo "instruction.sh exists"
                 else
-        wget -q $GITHUB_REPO/instruction.sh -P $SCRIPTS
+        wget -q $STATIC/instruction.sh -P $SCRIPTS
 fi
 # Clears command history on every login
         if [ -f $SCRIPTS/history.sh ];
                 then
                 echo "history.sh exists"
                 else
-        wget -q $GITHUB_REPO/history.sh -P $SCRIPTS
+        wget -q $STATIC/history.sh -P $SCRIPTS
 fi
 
 # Change root profile
@@ -427,6 +428,14 @@ else
 	sleep 2
 fi
 
+# Get script for Redis
+        if [ -f $SCRIPTS/install-redis-php-7.sh ];
+                then
+                echo "install-redis-php-7.sh exists"
+                else
+        wget -q $STATIC/install-redis-php-7.sh -P $SCRIPTS
+fi
+
 # Make $SCRIPTS excutable
 chmod +x -R $SCRIPTS
 chown root:root -R $SCRIPTS
@@ -434,14 +443,6 @@ chown root:root -R $SCRIPTS
 # Allow $UNIXUSER to run theese scripts
 chown $UNIXUSER:$UNIXUSER $SCRIPTS/instruction.sh
 chown $UNIXUSER:$UNIXUSER $SCRIPTS/history.sh
-
-# Get script for Redis
-        if [ -f $SCRIPTS/install-redis-php-7.sh ];
-                then
-                echo "install-redis-php-7.sh exists"
-                else
-        wget -q $GITHUB_REPO/install-redis-php-7.sh -P $SCRIPTS
-fi
 
 # Install Redis
 bash $SCRIPTS/install-redis-php-7.sh
@@ -450,56 +451,14 @@ rm $SCRIPTS/install-redis-php-7.sh
 # Upgrade
 aptitude full-upgrade -y
 
-#Cleanup
+# Cleanup
 echo "$CLEARBOOT"
-
-# Get the latest owncloud-startup-script.sh
-echo "Writes to rc.local..."
-
-cat << RCLOCAL > "/etc/rc.local"
-#!/bin/sh -e
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
-
-# Download owncloud-startup-script.sh
-		echo "Downloading owncloud-startup-script.sh...."
-		rm $SCRIPTS/owncloud-startup-script.sh
-		wget -q $GITHUB_REPO/owncloud-startup-script.sh -P $SCRIPTS
-
-# Check if script exists, otherwise reboot (possible loop)
-	if [ -f $SCRIPTS/owncloud-startup-script.sh ];
-        then
-                echo "Download successful!" 
-                sleep 3
-        else
-		echo "Download failed, rebooting in 15 seconds until success. Please check you network connection"
-		sleep 15
-		reboot
-	fi
-
-# Restore colors
-echo -e "\e[0"
-
-# Make $SCRIPTS excutable
-chmod +x -R $SCRIPTS
-chown root:root -R $SCRIPTS
-
-# Allow $UNIXUSER to run theese scripts
-chown $UNIXUSER:$UNIXUSER $SCRIPTS/instruction.sh
-chown $UNIXUSER:$UNIXUSER $SCRIPTS/history.sh
-
-exit 0
-
-RCLOCAL
+apt-get autoremove -y
+apt-get autoclean
+if [ -f /home/$UNIXUSER/owncloud_install_production.sh ];
+then
+	rm /home/$UNIXUSER/owncloud_install_production.sh
+fi
 
 # Reboot
 reboot
