@@ -14,7 +14,7 @@ cat << INST2
 | install instructions: https://goo.gl/3FYtz6                           |
 |                                                                       |
 | You can also set the ownCloud update process as a cronjob.            |
-| This is made thru the built in script in this VM that                 |
+| This is made through the built in script in this VM that              |
 | updates ownCloud, set secure permissions, and then                    |
 | logs the successful update in /var/log/cronjobs_success.log           |
 | Here is a guide on how to set it up:                                  |
