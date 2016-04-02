@@ -313,7 +313,7 @@ echo    "|                                                                    |"
 echo -e "|    \e[91m#################### Tech and Me - 2016 ####################\e[32m    |"
 echo    "+--------------------------------------------------------------------+"
 echo
-read -p "Press any key to reboot..." -n1 -s
+read -p "Press any key to continue..." -n1 -s
 echo -e "\e[0m"
 echo
 
@@ -356,6 +356,18 @@ cat << RCLOCAL > "/etc/rc.local"
 exit 0
 
 RCLOCAL
+
+clear
+echo
+echo
+cat << LETSENC
++------------------------------------------+
+|       Ok, now the last part - SSL.       |
+|       The following script will install  |
+|	SSL through Let's encrypt.         |
++------------------------------------------+
+LETSENC
+
 
 # Let's Encrypt
 function ask_yes_or_no() {

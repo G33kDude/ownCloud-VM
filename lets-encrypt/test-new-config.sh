@@ -26,9 +26,8 @@ then
 	echo "There are several ways of doing so, here are some tips and tricks: https://goo.gl/c1JHR0"
 	echo "Feel free to contribute to this project: https://goo.gl/vEsWjb"
 	echo -e "\e[32m"
-    	read -p "Press any key to reboot... " -n1 -s
+    	read -p "Press any key to continue... " -n1 -s
     	echo -e "\e[0m"
-	reboot
 else
 # If it fails, revert changes back to normal
         a2dissite owncloud_ssl_domain.conf
