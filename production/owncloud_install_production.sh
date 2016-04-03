@@ -315,6 +315,15 @@ echo -ne '\n' | sudo apt-add-repository ppa:libreoffice/libreoffice-4-4
 apt-get update
 sudo apt-get install --no-install-recommends libreoffice-writer -y
 
+# Install packages for Webmin
+apt-get install --force-yes -y zip perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
+
+# Install Webmin
+sed -i '$a deb http://download.webmin.com/download/repository sarge contrib' /etc/apt/sources.list
+wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add -
+apt-get update
+apt-get install webmin -y
+
 # Install Unzip
 apt-get install unzip -y
 
